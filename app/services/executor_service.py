@@ -9,6 +9,7 @@ from app.controllers.socket_controller import broadcast_message
 from app.services.playbook_service import PlaybookService
 from app.utils.message_utils import create_standard_message
 import logging
+from app.services.inspec_service import InspecService
 
 logger = logging.getLogger(__name__)
 
@@ -38,9 +39,9 @@ def process_command(command):
     
     try:
         # 根据命令类型执行不同的处理逻辑
-        if command.command_type == 'playbook':
+        if command.command_type == 'script':
             # 执行SOAR剧本
-            result = execute_playbook_command(command)
+            result = execute_script_command(command)
         elif command.command_type == 'manual':
             # 人工命令，需要前端用户处理
             result = handle_manual_command(command)
@@ -93,7 +94,7 @@ def process_command(command):
             "message": error_msg
         })
 
-def execute_playbook_command(command):
+def execute_script_command(command):
     """执行SOAR剧本命令
     
     Args:
@@ -102,13 +103,13 @@ def execute_playbook_command(command):
     Returns:
         执行结果
     """
-    logger.info(f"执行SOAR剧本命令: {command.command_id}")
-    
+    logger.info(f"执行inspec脚本命令: {command.command_id}")
+
     # 创建PlaybookService实例
-    playbook_service = PlaybookService()
+    script_service = InspecService()
     
     # 执行剧本
-    result = playbook_service.execute_playbook(command)
+    result = script_service.execute_script(command)
     
     return result
 

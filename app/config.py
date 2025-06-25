@@ -8,6 +8,12 @@ load_dotenv()
 # 创建配置对象
 config = SimpleNamespace()
 
+# Inspec配置
+config.INSPEC_PATH = os.getenv('INSPEC_PATH', '/usr/local/bin/inspec')
+config.INSPEC_PROFILE_DIR = os.getenv('INSPEC_PROFILE_DIR','profiles')
+config.INSPEC_OUTPUT_DIR = os.getenv('INSPEC_OUTPUT_DIR','output/inspec')
+config.INSPEC_RETRY_COUNT = int(os.getenv('INSPEC_RETRY_COUNT',3))
+config.INSPEC_RETRY_DELAY = int(os.getenv('INSPEC_RETRY_DELAY', 5))
 # SOAR配置
 config.SOAR_API_URL = os.getenv('SOAR_API_URL', 'https://api.example-soar.com')
 config.SOAR_API_TOKEN = os.getenv('SOAR_API_TOKEN', 'your_soar_api_token')

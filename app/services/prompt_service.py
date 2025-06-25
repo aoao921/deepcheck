@@ -17,8 +17,8 @@ class PromptService:
             background_info = f.read()
 
         # 加载剧本列表
-        with open(self.prompt_dir / 'background_soar_playbooks.md', 'r', encoding='utf-8') as f:
-            playbook_list = f.read()
+        with open(self.prompt_dir / 'background_inspec_scripts.md', 'r', encoding='utf-8') as f:
+            script_list = f.read()
 
         # 角色文件映射
         role_files = {
@@ -37,7 +37,7 @@ class PromptService:
                     prompt = f.read()
                     # 替换背景信息和剧本列表
                     prompt = prompt.replace('{background_info}', background_info)
-                    prompt = prompt.replace('{playbook_list}', playbook_list)
+                    prompt = prompt.replace('{script_list}', script_list)
                     self._prompts[role] = prompt
             else:
                 print(f"警告：角色提示词文件 {file_name} 不存在")

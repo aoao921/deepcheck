@@ -216,7 +216,7 @@ if __name__ == '__main__':
         socketio.run(
             app, 
             host=os.getenv('LISTEN_HOST', '0.0.0.0'), 
-            port=int(os.getenv('LISTEN_PORT', 5007)), 
+            port=int(os.getenv('LISTEN_PORT', 55555)),
             debug=True,
             use_reloader=False,  # 禁用重载器，避免Socket.IO连接问题
             allow_unsafe_werkzeug=True  # 允许在调试模式下使用Werkzeug

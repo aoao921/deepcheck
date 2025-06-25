@@ -1,7 +1,7 @@
-# AIå’Œå¤§æ¨¡åž‹ç›¸å…³
+# AIºÍ´óÄ£ÐÍÏà¹Ø
 openai>=1.0.0
 
-# Webæ¡†æž¶å’ŒAPI
+# Web¿ò¼ÜºÍAPI
 flask>=3.0.0
 flask-socketio>=5.3.0
 flask-migrate>=4.0.0
@@ -11,18 +11,18 @@ websockets>=12.0
 python-dotenv>=1.0.0
 pydantic>=2.5.0
 
-# è®¤è¯ç›¸å…³
+# ÈÏÖ¤Ïà¹Ø
 flask-jwt-extended>=4.5.0
 werkzeug>=3.0.0
 
-# æ•°æ®åº“
+# Êý¾Ý¿â
 sqlalchemy>=2.0.0
 aiosqlite>=0.19.0
 alembic>=1.12.0
 
-# å®‰å…¨å·¥å…·é›†æˆ
+# °²È«¹¤¾ß¼¯³É
 requests>=2.31.0
 aiohttp>=3.9.0
 
-# å·¥å…·å’Œå®žç”¨ç¨‹åº
+# ¹¤¾ßºÍÊµÓÃ³ÌÐò
 pyyaml>=6.0.1
