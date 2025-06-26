@@ -114,7 +114,7 @@ def process_execution_summary(execution):
         )
         
         # 使用长文本模型
-        response = call_llm(system_prompt, user_prompt, temperature=0.3, long_text=True)
+        response = call_llm(system_prompt, user_prompt)
         
         logger.info(f"生成摘要成功: {execution.execution_id}\n{response}")
         
@@ -130,6 +130,7 @@ def process_execution_summary(execution):
         create_execution_summary_message(execution, response)
         
     except Exception as e:
+        print(11)
         error_msg = f"处理执行结果摘要时出错: {str(e)}"
         logger.error(error_msg)
 
@@ -573,7 +574,7 @@ def generate_event_summary(event_id):
             content_data="正在请求大模型，生成事件总结，请耐心等待......"
         )
         # 调用大模型生成总结
-        response = call_llm(system_prompt, user_prompt, temperature=0.3, long_text=True)
+        response = call_llm(system_prompt, user_prompt, temperature=0.3)
         
         logger.info(f"生成事件总结成功: {event_id}")
 

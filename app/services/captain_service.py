@@ -20,7 +20,7 @@ def get_events_to_process():
     return Event.query.filter(
         or_(
             Event.status == 'pending',
-            Event.status == 'round_finished'
+            # Event.status == 'round_finished'
         )
     ).order_by(Event.created_at.asc()).first()  
 

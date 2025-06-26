@@ -30,7 +30,7 @@ config.LLM_MODEL_LONG_TEXT = os.getenv('LLM_MODEL_LONG_TEXT', 'qwen-long')
 config.LLM_TEMPERATURE = float(os.getenv('LLM_TEMPERATURE', 0.6))
 
 # 事件处理配置
-config.EVENT_MAX_ROUND = int(os.getenv('EVENT_MAX_ROUND', 3))
+config.EVENT_MAX_ROUND = int(os.getenv('EVENT_MAX_ROUND', 1))
 
 # 其他配置
 config.DEBUG = os.getenv('DEBUG', 'False').lower() == 'true' 
