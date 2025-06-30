@@ -6,6 +6,10 @@ body {
 }
 
 /* 首页样式 */
+
+.hidden {
+    display: none;
+}
 .event-card {
     margin-bottom: 15px;
     cursor: pointer;

@@ -17,8 +17,8 @@ class User(db.Model):
     role = db.Column(db.String(32), default='user')  # admin, user
     last_login_at = db.Column(db.DateTime)
     is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
     
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -51,8 +51,8 @@ class Event(db.Model):
     severity = db.Column(db.String(32))
     status = db.Column(db.String(32), default='pending')
     current_round = db.Column(db.Integer, default=1)  # 当前处理轮次，默认为1
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
     
     def to_dict(self):
         return {
@@ -82,8 +82,8 @@ class Task(db.Model):
     task_status = db.Column(db.String(32), default='pending')
     round_id = db.Column(db.Integer)
     result = db.Column(db.JSON)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
     
     def to_dict(self):
         return {
@@ -114,8 +114,8 @@ class Action(db.Model):
     action_assignee = db.Column(db.String(64))
     action_status = db.Column(db.String(32), default='pending')
     action_result = db.Column(db.JSON)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
     
     def to_dict(self):
         return {
@@ -150,8 +150,8 @@ class Command(db.Model):
     command_params = db.Column(db.JSON)
     command_status = db.Column(db.String(32), default='pending')
     command_result = db.Column(db.JSON)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
     
     def to_dict(self):
         return {
@@ -186,8 +186,8 @@ class Execution(db.Model):
     execution_summary = db.Column(db.Text)
     ai_summary = db.Column(db.Text)
     execution_status = db.Column(db.String(50), default='pending')
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
     def to_dict(self):
         return {
@@ -245,8 +245,8 @@ class Summary(db.Model):
     event_suggestion = db.Column(db.Text)
     # root_cause = db.Column(db.Text)
     # prevention = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
     def to_dict(self):
         return {
@@ -269,7 +269,7 @@ class LLMRecord(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     request_id = db.Column(db.String(128), nullable=True)  # 请求ID，如OpenAI的id字段
     model_name = db.Column(db.String(64), nullable=False)  # 使用的模型名称
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)  # 请求创建时间
+    created_at = db.Column(db.DateTime, default=datetime.now)  # 请求创建时间
     request_messages = db.Column(db.JSON, nullable=False)  # 请求的完整messages
     response_content = db.Column(db.Text, nullable=True)  # 响应内容
     response_full = db.Column(db.JSON, nullable=True)  # 完整响应

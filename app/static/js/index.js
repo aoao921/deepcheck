@@ -1,4 +1,4 @@
-// DeepSOC 首页脚本
+// DeepCheck 首页脚本
 
 // API基础URL
 const API_BASE_URL = '/api';
@@ -24,17 +24,17 @@ function getCookie(name) {
 document.addEventListener('DOMContentLoaded', () => {
     // 验证用户是否登录
     checkAuth();
-    
-    // 获取事件列表
+
+    // 获取任务列表
     fetchEvents();
-    
+
     // 刷新按钮点击事件
     document.getElementById('refresh-events').addEventListener('click', fetchEvents);
-    
+
     // 表单提交事件
     document.getElementById('event-form').addEventListener('submit', (e) => {
         e.preventDefault();
-        
+
         const token = localStorage.getItem('access_token') || getCookie('access_token');
         if (!token) {
             showToast('请先登录', 'error');
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1500);
             return;
         }
-        
+
         const eventData = {
             event_name: document.getElementById('event-name').value,
             message: document.getElementById('event-message').value,
@@ -51,20 +51,20 @@ document.addEventListener('DOMContentLoaded', () => {
             severity: document.getElementById('event-severity').value,
             source: document.getElementById('event-source').value
         };
-        
+
         // 验证必填字段
         if (!eventData.message) {
-            showToast('事件描述不能为空', 'error');
+            showToast('任务描述不能为空', 'error');
             return;
         }
-        
+
         // 禁用提交按钮
         const submitButton = document.querySelector('#event-form button[type="submit"]');
         const originalButtonText = submitButton.textContent;
         submitButton.disabled = true;
         submitButton.textContent = '创建中...';
-        
-        // 发送创建事件请求
+
+        // 发送创建任务请求
         fetch('/api/event/create', {
             method: 'POST',
             headers: getAuthHeaders(),
@@ -84,15 +84,15 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
             if (data.status === 'success') {
-                showToast('事件创建成功', 'success');
-                
+                showToast('任务创建成功', 'success');
+
                 // 重置表单
                 document.getElementById('event-form').reset();
-                
-                // 刷新事件列表
+
+                // 刷新任务列表
                 fetchEvents();
-                
-                // 跳转到作战室页面
+
+                // 跳转到操作室页面
                 setTimeout(() => {
                     window.location.href = `/warroom/${data.data.event_id}`;
                 }, 1000);
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             if (error.message !== '未登录或会话已过期') {
-                console.error('创建事件错误:', error);
+                console.error('创建任务错误:', error);
                 showToast('网络错误，请稍后重试', 'error');
                 // 恢复提交按钮
                 submitButton.disabled = false;
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    
+
     // 登出按钮
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
@@ -121,85 +121,105 @@ document.addEventListener('DOMContentLoaded', () => {
             logout();
         });
     }
-    
+
     // 添加用户信息显示
     updateUserInfo();
+
+    // 为任务列表添加事件委托，处理删除按钮点击
+    document.addEventListener('click', function(e) {
+        if (e.target && (e.target.classList.contains('delete-event-btn') || e.target.closest('.delete-event-btn'))) {
+            e.preventDefault();
+            e.stopPropagation();
+            const button = e.target.classList.contains('delete-event-btn') ? e.target : e.target.closest('.delete-event-btn');
+            const eventId = button.getAttribute('data-event-id');
+            if (eventId) {
+                confirmDeleteEvent(eventId);
+            }
+        }
+    });
 });
 
-// 获取事件列表
+// 获取任务列表
 async function fetchEvents() {
     try {
         const eventsContainer = document.getElementById('events-container');
-        
+
         if (!eventsContainer) return;
-        
+
         // 显示加载中
         eventsContainer.innerHTML = `
             <div class="text-center py-5">
                 <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">加载中...</span>
                 </div>
-                <p class="mt-2">加载事件列表...</p>
+                <p class="mt-2">加载任务列表...</p>
             </div>
         `;
-        
+
         const response = await fetch(`${API_BASE_URL}/event/list`, {
             headers: getAuthHeaders(),
             credentials: 'include'  // 包含凭证
         });
-        
+
         if (response.status === 401) {
             // 未登录，显示提示信息
             eventsContainer.innerHTML = `
                 <div class="text-center py-5">
                     <div class="alert alert-warning" role="alert">
-                        请先<a href="/login" class="alert-link">登录</a>后查看事件列表
+                        请先<a href="/login" class="alert-link">登录</a>后查看任务列表
                     </div>
                 </div>
             `;
             throw new Error('未登录或会话已过期');
         }
-        
+
         const data = await response.json();
-        
+
         if (data.status === 'success') {
             if (data.data.length === 0) {
-                // 没有事件
+                // 没有任务
                 eventsContainer.innerHTML = `
                     <div class="text-center py-5">
-                        <p class="text-muted">暂无安全事件</p>
+                        <p class="text-muted">暂无安全基线检查任务</p>
                     </div>
                 `;
                 return;
             }
-            
-            // 渲染事件列表
+
+            // 渲染任务列表
             let html = '<div class="list-group">';
-            
+
             data.data.forEach(event => {
                 const createdAt = new Date(event.created_at).toLocaleString('zh-CN');
                 const eventLink = `/warroom/${event.event_id}`;
                 const statusBadge = getStatusBadge(event.status);
                 const severityBadge = getSeverityBadge(event.severity);
-                
+
                 html += `
-                    <a href="${eventLink}" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">${event.event_name || '未命名事件'}</h5>
-                            <small>${createdAt}</small>
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="${eventLink}" class="flex-grow-1 text-decoration-none text-dark">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">${event.event_name || '未命名任务'}</h5>
+                                    <small>${createdAt}</small>
+                                </div>
+                                <p class="mb-1">${event.message}</p>
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <span class="badge rounded-pill ${severityBadge.class}">${severityBadge.text}</span>
+                                        <span class="badge rounded-pill ${statusBadge.class}">${statusBadge.text}</span>
+                                    </div>
+                                    <small>来源: ${event.source}</small>
+                                </div>
+                            </a>
+                            <button class="btn btn-sm btn-outline-danger ms-3 delete-event-btn" data-event-id="${event.event_id}" title="删除任务">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </div>
-                        <p class="mb-1">${event.message}</p>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <span class="badge rounded-pill ${severityBadge.class}">${severityBadge.text}</span>
-                                <span class="badge rounded-pill ${statusBadge.class}">${statusBadge.text}</span>
-                            </div>
-                            <small>来源: ${event.source}</small>
-                        </div>
-                    </a>
+                    </div>
                 `;
             });
-            
+
             html += '</div>';
             eventsContainer.innerHTML = html;
         } else {
@@ -210,7 +230,7 @@ async function fetchEvents() {
             `;
         }
     } catch (error) {
-        console.error('获取事件列表错误:', error);
+        console.error('获取任务列表错误:', error);
         if (error.message !== '未登录或会话已过期') {
             eventsContainer.innerHTML = `
                 <div class="alert alert-danger" role="alert">
@@ -218,6 +238,37 @@ async function fetchEvents() {
                 </div>
             `;
         }
+    }
+}
+
+// 确认删除任务
+function confirmDeleteEvent(eventId) {
+    if (confirm('确定要删除此安全基线检查任务吗？此操作不可恢复。')) {
+        deleteEvent(eventId);
+    }
+}
+
+// 删除任务
+async function deleteEvent(eventId) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/event/delete/${eventId}`, {
+            method: 'DELETE',
+            headers: getAuthHeaders(),
+            credentials: 'include'
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            showToast('任务删除成功', 'success');
+            // 刷新任务列表
+            fetchEvents();
+        } else {
+            showToast(data.message || '删除失败，请稍后重试', 'error');
+        }
+    } catch (error) {
+        console.error('删除任务错误:', error);
+        showToast('网络错误，请稍后重试', 'error');
     }
 }
 

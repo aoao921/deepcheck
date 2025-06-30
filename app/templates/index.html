@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeepSOC - AI驱动的安全运营中心</title>
+    <title>DeepCheck - AI驱动的安全基线检查系统</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-icons.css">
     <link rel="stylesheet" href="/static/css/style.css">
@@ -12,8 +12,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/">
-                <img src="/static/images/logo/logo.png" alt="DeepSOC Logo" height="30" class="me-2">
-                DeepSOC
+                <img src="/static/images/logo/logo.png" alt="DeepCheck Logo" height="30" class="me-2">
+DeepCheck
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -47,8 +47,8 @@
     <div class="container">
         <header class="mb-4">
             <div class="text-center">
-                <h1>DeepSOC</h1>
-                <p class="text-muted">AI驱动的安全运营中心</p>
+                <h1>DeepCheck</h1>
+                <p class="text-muted">AI驱动的安全基线检查系统</p>
             </div>
         </header>
 
@@ -57,7 +57,7 @@
                 <!-- 登录前显示 -->
                 <div class="card mb-4 d-none" id="login-prompt">
                     <div class="card-header">
-                        <h5>创建安全事件</h5>
+                        <h5>创建安全基线检查任务</h5>
                     </div>
                     <div class="card-body">
                         <p class="text-center">请先登录后使用完整功能</p>
@@ -70,35 +70,35 @@
                 <!-- 登录后显示 -->
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h5>创建安全事件</h5>
+                        <h5>创建安全基线检查任务</h5>
                     </div>
                     <div class="card-body">
                         <form id="event-form">
                             <div class="mb-3">
-                                <label for="event-name" class="form-label">事件名称 (可选)</label>
+                                <label for="event-name" class="form-label">任务名称 (可选)</label>
                                 <input type="text" class="form-control" id="event-name" placeholder="如未提供，系统将自动生成">
                             </div>
                             <div class="mb-3">
-                                <label for="event-message" class="form-label">事件描述 *</label>
-                                <textarea class="form-control" id="event-message" rows="4" required placeholder="例如：检测到外部IP 66.240.205.34 正在暴力破解邮件网关服务器，对应内网IP地址是192.168.22.251"></textarea>
+                                <label for="event-message" class="form-label">任务描述 *</label>
+                                <textarea class="form-control" id="event-message" rows="4" required placeholder="例如：对Windows服务器192.168.22.251进行安全基线检查"></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="event-context" class="form-label">事件上下文 (可选)</label>
-                                <textarea class="form-control" id="event-context" rows="2" placeholder="提供更多背景信息"></textarea>
+                                <label for="event-context" class="form-label">任务上下文 (可选)</label>
+                                <textarea class="form-control" id="event-context" rows="2" placeholder="提供更多背景信息，如服务器用途、版本等"></textarea>
                             </div>
-                            <div class="mb-3">
-                                <label for="event-severity" class="form-label">严重程度</label>
+                            <div class="hidden">
+                                <label for="event-severity" class="form-label">优先级</label>
                                 <select class="form-select" id="event-severity">
                                     <option value="low">低</option>
                                     <option value="medium" selected>中</option>
                                     <option value="high">高</option>
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label for="event-source" class="form-label">事件来源</label>
-                                <input type="text" class="form-control" id="event-source" value="manual" placeholder="例如：SIEM, EDR, 人工报告">
+                            <div class="hidden">
+                                <label for="event-source" class="form-label">任务来源</label>
+                                <input type="text" class="form-control" id="event-source" value="manual" placeholder="例如：合规要求、定期检查、安全审计">
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">创建事件</button>
+                            <button type="submit" class="btn btn-primary w-100">创建任务</button>
                         </form>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5>安全事件列表</h5>
+                        <h5>安全基线检查任务列表</h5>
                         <button id="refresh-events" class="btn btn-sm btn-outline-secondary">刷新</button>
                     </div>
                     <div class="card-body">
@@ -116,7 +116,7 @@
                                 <div class="spinner-border text-primary" role="status">
                                     <span class="visually-hidden">加载中...</span>
                                 </div>
-                                <p class="mt-2">加载事件列表...</p>
+                                <p class="mt-2">加载任务列表...</p>
                             </div>
                         </div>
                     </div>
