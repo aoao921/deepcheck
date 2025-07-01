@@ -137,8 +137,8 @@ def health():
         'message': 'DeepSOC API is healthy'
     })
 
-@app.route('/test')
-def your_page():
+@app.route('/result')
+def result():
     return render_template('heimdallite.html')
 
 def create_tables():
