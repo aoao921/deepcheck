@@ -167,13 +167,18 @@ class InspecClient:
             
             cmd.append(script_path)
             
-            # 添加目标主机
+            # 添加目标主机，支持用户名和密码
             host = params.get('host')
             user = params.get('user')
+            password = params.get('password')
+            
             if host:
                 target = f"ssh://"
                 if user:
-                    target += f"{user}@"
+                    target += f"{user}"
+                    if password:
+                        target += f":{password}"
+                    target += "@"
                 target += host
                 cmd.extend(["-t", target])
             
@@ -271,7 +276,8 @@ if __name__ == '__main__':
             'output_format': 'json',
             'output_path': 'output/inspec/test.json',
             'host': 'example.com',
-            'user': 'test_user'
+            'user': 'test_user',
+            'password': 'test_password'  # 添加密码参数
         }
         
         # 执行脚本
