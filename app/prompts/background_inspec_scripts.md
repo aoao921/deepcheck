@@ -12,6 +12,9 @@ profiles:
       - name: user
         desc: 远程主机上的username
         required: false
+      - name: password
+        desc: 远程主机上的用户密码
+        required: false
       - name: output_format
         desc: 输出格式(json或html)
         default: 'json'
@@ -34,6 +37,9 @@ profiles:
         required: false
       - name: user
         desc: 远程主机上的username
+        required: false
+      - name: password
+        desc: 远程主机上的用户密码
         required: false
       - name: output_format
         desc: 输出格式(json或html)
@@ -58,6 +64,9 @@ profiles:
       - name: user
         desc: 远程主机上的username
         required: false
+      - name: password
+        desc: 远程主机上的用户密码
+        required: false
       - name: output_format
         desc: 输出格式(json或html)
         default: 'json'
@@ -80,6 +89,9 @@ profiles:
         required: false
       - name: user
         desc: 远程主机上的username
+        required: false
+      - name: password
+        desc: 远程主机上的用户密码
         required: false
       - name: output_format
         desc: 输出格式(json或html)
@@ -104,6 +116,9 @@ profiles:
       - name: user
         desc: 远程主机上的username
         required: false
+      - name: password
+        desc: 远程主机上的用户密码
+        required: false
       - name: output_format
         desc: 输出格式(json或html)
         default: 'json'
@@ -127,6 +142,9 @@ profiles:
       - name: user
         desc: 远程主机上的username
         required: false
+      - name: password
+        desc: 远程主机上的用户密码
+        required: false
       - name: output_format
         desc: 输出格式(json或html)
         default: 'json'
@@ -149,6 +167,9 @@ profiles:
         required: false
       - name: user
         desc: 远程主机上的username
+        required: false
+      - name: password
+        desc: 远程主机上的用户密码
         required: false
       - name: output_format
         desc: 输出格式(json或html)
