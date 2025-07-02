@@ -39,18 +39,17 @@ class InspecService:
                 }
 
             # 执行剧本
-            logger.info(f"执行剧本: {script_id}, 参数: {params}")
+            logger.info(f"执行脚本: {script_id}, 参数: {params}")
             # activity_id = self.soar_client.execute_playbook(playbook_id, params)
             result = self.inspec_client.execute_profile(script_id,params)
 
-            # if not result:
-            #     error_msg = "脚本执行失败，未获取到执行结果"
-            #     logger.error(error_msg)
-            #     return {
-            #         "status": "failed",
-            #         "message": error_msg
-            #     }
-            #
+            if not result:
+                error_msg = "脚本执行失败，未获取到执行结果"
+                logger.error(error_msg)
+                return {
+                    "status": "failed",
+                    "message": error_msg
+                }
             # if not result:
             #     error_msg = f"剧本执行超时或失败: {activity_id}"
             #     logger.error(error_msg)

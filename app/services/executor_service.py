@@ -105,11 +105,11 @@ def execute_script_command(command):
     """
     logger.info(f"执行inspec脚本命令: {command.command_id}")
 
-    # 创建PlaybookService实例
-    script_service = InspecService()
+
+    inspec_service = InspecService()
     
-    # 执行剧本
-    result = script_service.execute_script(command)
+    # 执行脚本
+    result = inspec_service.execute_script(command)
     
     return result
 
