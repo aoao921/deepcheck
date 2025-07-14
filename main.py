@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 from app.models import db
 from app.utils.logging_config import configure_logging
 from app.models.models import User
-
+from app.controllers.heimdallite_controller import heimdallite_bp
 # 配置日志
 logger = configure_logging()
 
@@ -22,6 +22,8 @@ load_dotenv()
 app = Flask(__name__, 
             static_folder='app/static',
             template_folder='app/templates')
+app.register_blueprint(heimdallite_bp)
+
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'deepsoc_secret_key')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///deepsoc.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -137,9 +139,24 @@ def health():
         'message': 'DeepSOC API is healthy'
     })
 
+# @app.route('/result')
+# def result():
+#     return render_template('heimdallite.html')
 @app.route('/result')
 def result():
-    return render_template('heimdallite.html')
+    inspec_dir = r'./output/inspec'
+    json_files = [f for f in os.listdir(inspec_dir) if f.endswith('.json')]
+    if not json_files:
+        return render_template('heimdallite.html', auto_json=None, auto_json_filename=None)
+    json_files = [os.path.join(inspec_dir, f) for f in json_files]
+    latest_file = max(json_files, key=os.path.getmtime)
+    with open(latest_file, 'r', encoding='utf-8') as f:
+        try:
+            json_data = f.read()
+        except Exception as e:
+            return render_template('heimdallite.html', auto_json=None, auto_json_filename=None)
+    return render_template('heimdallite.html', auto_json=json_data, auto_json_filename=os.path.basename(latest_file))
+
 
 def create_tables():
     """创建所有数据库表"""
