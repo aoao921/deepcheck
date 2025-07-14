@@ -11,7 +11,7 @@ config = SimpleNamespace()
 # Inspec配置
 config.INSPEC_PATH = os.getenv('INSPEC_PATH', '/usr/local/bin/inspec')
 config.INSPEC_PROFILE_DIR = os.getenv('INSPEC_PROFILE_DIR','profiles')
-config.INSPEC_OUTPUT_DIR = os.getenv('INSPEC_OUTPUT_DIR','output/inspec')
+config.INSPEC_OUTPUT_DIR = os.getenv('INSPEC_OUTPUT_DIR', '../output/inspec')
 config.INSPEC_RETRY_COUNT = int(os.getenv('INSPEC_RETRY_COUNT',3))
 config.INSPEC_RETRY_DELAY = int(os.getenv('INSPEC_RETRY_DELAY', 5))
 # SOAR配置
