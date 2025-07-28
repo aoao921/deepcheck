@@ -24,6 +24,11 @@ from app.config import config
 
 logger = logging.getLogger(__name__)
 
+def clean_output(output: str) -> str:
+    # 如果包含 '{'，则截取从第一个 '{' 开始的部分；否则返回原始内容
+    index = output.find('{')
+    return output[index:] if index != -1 else output
+
 class InspecClient:
     def __init__(self):
         self.profiles_config = self._load_profile_config()
@@ -281,8 +286,8 @@ class InspecClient:
             result = {
                 "command": command_str,
                 "return_code": process.returncode,
-                "stdout": stdout,
-                "stderr": stderr
+                "stdout": clean_output(stdout),
+                "stderr": clean_output(stderr)
             }
             
             if process.returncode in success_codes:
@@ -355,6 +360,6 @@ if __name__ == '__main__':
         
         # 执行脚本
         result = client.execute_profile(profile_id, params)
-        logger.info(f"执行结果: {json.dumps(result, ensure_ascii=False, indent=2)}")
+        # logger.info(f"执行结果: {json.dumps(result, ensure_ascii=False, indent=2)}")
     else:
         logger.warning("没有找到可用的脚本") 
