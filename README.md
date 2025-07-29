@@ -94,7 +94,10 @@ python tools/run_all_agents.py
 
 ![](app/static/images/deepcheck-warroom.png)
 
+### 可视化检测结果
 
+![](app/static/images/deepcheck-result1.png)
+![](app/static/images/deepcheck-result2.png)
 ## 🤝 参与贡献
 
 我们欢迎任何形式的贡献！
@@ -109,3 +112,4 @@ python tools/run_all_agents.py
 
 - [inspec](https://github.com/inspec/inspec) - Auditing and Testing Framework 
 - [deepsoc](https://github.com/flagify-com/deepsoc) - 通过多智能体（Multi-Agent）打造的革命性的安全运营解决方案
+- [heimdall-lite](https://github.com/mitre/heimdall-lite-1.0) - A single page java-script implementation of the MITRE Heimdall InSpec results viewer 
