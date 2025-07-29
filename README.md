@@ -1,58 +1,10 @@
-# DeepSOC 🚀
+# DeepCheck 🚀
 
 <p align="center">
-  <strong>AI驱动的新一代安全运营中心 | AI-Powered Security Operations Center</strong>
+  <strong>AI驱动的新一代基线合规检测平台</strong>
 </p>
 
-<p align="center">
-  <a href="https://github.com/flagify-com/deepsoc/stargazers">
-    <img src="https://img.shields.io/github/stars/flagify-com/deepsoc" alt="Stars">
-  </a>
-  <a href="https://github.com/flagify-com/deepsoc/network/members">
-    <img src="https://img.shields.io/github/forks/flagify-com/deepsoc" alt="Forks">
-  </a>
-  <a href="https://github.com/flagify-com/deepsoc/issues">
-    <img src="https://img.shields.io/github/issues/flagify-com/deepsoc" alt="Issues">
-  </a>
-  <a href="https://github.com/flagify-com/deepsoc/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/flagify-com/deepsoc" alt="License">
-  </a>
-</p>
 
-## 📖 项目简介
-
-DeepSOC 是一个革命性的安全运营解决方案，它将先进的 AI 技术与传统的安全运营工具完美结合，通过多智能体（Multi-Agent）架构，DeepSOC 能够自动化处理安全事件，显著提升安全运营效率。
-
-DeepSOC产品工作逻辑图
-
-![DeepSOC产品工作逻辑图](app/static/images/deepsoc-work-logic.jpg)
-
-### ✨ 核心特性
-
-- 🤖 **智能多Agent架构**
-  - 指挥官：统筹全局决策
-  - 经理：任务分配协调
-  - 操作员：执行具体操作
-  - 执行器：连接外部工具
-  - 专家：提供专业建议
-
-- 🔄 **自动化处理流程**
-  - 自动分析安全告警
-  - 智能决策响应方案
-  - 自动化执行处置
-  - 实时反馈处理结果
-
-- 🛠 **丰富的工具集成**
-  - 支持 SOAR 自动化编排
-  - 可扩展 Function Calling Tools
-  - 可扩展 MCP Tools
-  - 支持人工参与事件处置
-
-- 🌐 **开放式架构**
-  - 支持自定义 AI 参数
-  - 可自定义处理流程
-  - 灵活的 API 接口
-  - WebSocket 实时通信
 
 ## 🚀 快速开始
 
@@ -60,16 +12,15 @@ DeepSOC产品工作逻辑图
 
 - Python 3.8+
 - SQLite（试验阶段方便部署测试，成熟之后随时切换）
-- 自动化系统（支持SOAR编排自动化系统，推荐[OctoMation社区免费版](https://github.com/flagify-com/OctoMation)）
-  - [剧本配置信息](docs/soar-config-help.md)
+- inspec （docker环境）
 
 
 ### 安装步骤
 
 1. 克隆项目
 ```bash
-git clone https://github.com/flagify-com/deepsoc.git
-cd deepsoc
+git clone https://github.com/aoao921/deepcheck.git
+cd deepcheck
 ```
 
 2. 安装依赖
@@ -89,8 +40,12 @@ pip install -r requirements.txt
 cp sample.env .env
 # 编辑 .env 文件，配置必要的环境变量
 ```
+4. docker安装chef inspec
+```bash
+docker pull chef/inspec
+```
 
-4. 启动服务
+5. 启动服务
 
 为了方便管理，调试和优化改进，我们为每个角色启动了单独的进程。
 
@@ -118,36 +73,27 @@ python main.py -role _executor
 # 安全专家
 python main.py -role _expert
 ```
+### 一键启动所有服务
 
+如果想在一个命令中启动全部服务，可以运行脚本：
+
+```bash
+python tools/run_all_agents.py
+```
+
+该脚本会自动从项目根目录加载`.env`文件，并在收到`Ctrl+C`或终止信号时清理所有子进程。
 ## 📚 使用示例
 
-### Web界面创建安全事件
+### Web界面创建检测事件
 
-登录`http://127.0.0.1:5007/`,创建安全事件。
+登录`http://127.0.0.1:55555/`  ,创建检测事件。
 
-![](app/static/images/deepsoc-home.jpg)
+![](app/static/images/deepcheck-home.png)
 
 ### 查看多Agent运行状态
 
-![](app/static/images/deepsoc-warroom.jpg)
+![](app/static/images/deepcheck-warroom.png)
 
-### 查看消息原始数据结构
-
-![](app/static/images/deepsoc-warroom-message-structure.jpg)
-
-
-### 3. curl创建安全事件
-
-```bash
-curl -X POST http://127.0.0.1:5007/api/event/create \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "SIEM告警外部IP 66.240.205.34正在对邮件网关服务器进行暴力破解攻击", 
-    "context": "邮件网关服务器的内网IP地址192.168.22.251", 
-    "severity": "medium",
-    "source": "SIEM"
-  }'
-```
 
 ## 🤝 参与贡献
 
@@ -161,25 +107,4 @@ curl -X POST http://127.0.0.1:5007/api/event/create \
 
 ## 📜 相关项目
 
-- [DeepSec](https://deepsec.top) - 中文网络安全运营领域开源语料库
-- [OctoMation](https://github.com/flagify-com/OctoMation) - 社区免费版编排自动化产品
-
-## 🌟 加入社区
-
-- 微信社区：扫码加入（备注：deepsoc）
-- 技术讨论：每周直播分享
-- 项目动态：实时更新
-
-
-
-DeepSOC群助手微信二维码
-
-<img src="app/static/images/deepsoc-wechat-assistant.jpg" width="100" alt="DeepSOC群助手微信二维码">
-
-## 📄 开源协议
-
-本项目采用 [MIT](LICENSE) 协议开源。
-
----
-
-<p align="center">用AI重新定义安全运营 | Redefining Security Operations with AI</p>
+- [inspec](https://github.com/inspec/inspec) - Auditing and Testing Framework 

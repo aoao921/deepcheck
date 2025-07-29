@@ -6,7 +6,7 @@ heimdallite_bp = Blueprint('heimdallite', __name__)
 
 @heimdallite_bp.route('/heimdallite')
 def heimdallite():
-    inspec_dir = r'../../output/inspec'
+    inspec_dir = r'../../output'
     # 获取所有json文件
     json_files = [f for f in os.listdir(inspec_dir) if f.endswith('.json')]
     print('json_files:', json_files)
