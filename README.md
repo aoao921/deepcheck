@@ -108,3 +108,4 @@ python tools/run_all_agents.py
 ## 📜 相关项目
 
 - [inspec](https://github.com/inspec/inspec) - Auditing and Testing Framework 
+- [deepsoc](https://github.com/flagify-com/deepsoc) - 通过多智能体（Multi-Agent）打造的革命性的安全运营解决方案
