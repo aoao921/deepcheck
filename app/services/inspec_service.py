@@ -10,7 +10,30 @@ from app.utils.inspec_client import InspecClient
 
 logger = logging.getLogger(__name__)
 
+def decode_bytes(obj):
+    """递归地将对象中的 bytes 解码为 str"""
+    if isinstance(obj, bytes):
+        return obj.decode('utf-8')
+    elif isinstance(obj, dict):
+        return {key: decode_bytes(value) for key, value in obj.items()}
+    elif isinstance(obj, (list, tuple)):
+        return [decode_bytes(item) for item in obj]
+    else:
+        return obj
 
+# 使用示例
+complex_data = {
+    "name": b"Alice",
+    "tags": [b"python", b"json"],
+    "metadata": {
+        "source": b"file.txt"
+    }
+}
+
+# 先解码所有 bytes
+clean_data = decode_bytes(complex_data)
+# 再进行 JSON 序列化
+json_string = json.dumps(clean_data)
 class InspecService:
     def __init__(self):
         self.inspec_client = InspecClient()
@@ -59,6 +82,11 @@ class InspecService:
             #     }
 
             # 记录执行结果
+            # del result['result']
+            del result['stdout']
+            del result['output']
+            del result['stderr']
+            print(result)
             execution = Execution(
                 execution_id=str(uuid.uuid4()),
                 command_id=command.command_id,

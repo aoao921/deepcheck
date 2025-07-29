@@ -27,10 +27,10 @@ def call_llm(system_prompt, user_prompt, history=None, temperature=None, long_te
     Returns:
         大模型返回的文本
     """
-    if not LLM_API_KEY:
-        raise ValueError("LLM_API_KEY环境变量未设置")
-    model = LLM_MODEL_LONG_TEXT if long_text else LLM_MODEL
-
+    # if not LLM_API_KEY:
+    #     raise ValueError("LLM_API_KEY环境变量未设置")
+    # model = LLM_MODEL_LONG_TEXT if long_text else LLM_MODEL
+    model=LLM_MODEL
     # 构建消息列表
     messages = [{"role": "system", "content": system_prompt}]
 

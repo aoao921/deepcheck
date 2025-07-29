@@ -3,6 +3,8 @@ import json
 import os
 import logging
 import time
+from datetime import datetime
+
 import yaml
 import sys
 from typing import Optional, Dict, Any, List, Union
@@ -26,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 def clean_output(output: str) -> str:
     # 如果包含 '{'，则截取从第一个 '{' 开始的部分；否则返回原始内容
-    index = output.find('{')
+    index = output.find(b'{')
     return output[index:] if index != -1 else output
 
 class InspecClient:
@@ -120,6 +122,7 @@ class InspecClient:
 
         # 执行命令
         logger.info(f"执行脚本: {profile['name']}, 命令: {' '.join(cmd)}")
+
         try:
             result = self._run_command(cmd, params.get('output_path'))
             
@@ -128,7 +131,7 @@ class InspecClient:
                 try:
                     if params.get('output_format', 'json') == 'json':
                         # 尝试解析JSON输出
-                        result["result"] = json.loads(result["stdout"])
+                        result["result"] = json.loads(result["stdout"].decode('utf-8'))
                     else:
                         result["result"] = result["stdout"]
                 except json.JSONDecodeError as e:
@@ -136,17 +139,21 @@ class InspecClient:
                     result["result"] = result["stdout"]
                 except Exception as e:
                     logger.warning(f"处理输出失败: {str(e)}")
-            
+
             # 如果指定了输出文件且执行成功，将结果写入文件
             if result["status"] == "success" and params.get('output_path') and result.get("stdout"):
                 try:
+                    current_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M")
+                    # 构造完整的文件名，例如: result_2025-07-29.txt
+                    filename = f"result_{current_datetime}.json"
                     os.makedirs(os.path.dirname(params['output_path']), exist_ok=True)
-                    with open(params['output_path'], 'w', encoding='utf-8') as f:
-                        f.write(result["stdout"])
+                    full_output_path = os.path.join(params['output_path'], filename)
+                    with open(full_output_path, 'w', encoding='utf-8') as f:
+                        f.write(result["stdout"].decode('utf-8'))
                     logger.info(f"结果已保存到: {params['output_path']}")
                 except Exception as e:
                     logger.warning(f"保存输出文件失败: {str(e)}")
-            
+            # print(result)
             return result
         except Exception as e:
             logger.error(f"脚本执行失败: {str(e)}")
@@ -265,24 +272,22 @@ class InspecClient:
         try:
             command_str = " ".join(cmd)
             logger.info(f"执行命令: {command_str}")
-            
+            print(cmd)
             # 实际执行命令
             process = subprocess.Popen(
                 cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                text=True,
                 shell=False
             )
             stdout, stderr = process.communicate()
-            
             # InSpec返回码说明:
             # 0 = 所有测试通过
             # 100 = 有测试失败但程序正常执行
             # 101 = 有测试跳过但程序正常执行  
             # 其他值 = 程序执行异常
             success_codes = [0, 100, 101]
-            
+            # print(clean_output(stdout))
             result = {
                 "command": command_str,
                 "return_code": process.returncode,
