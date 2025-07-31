@@ -87,6 +87,11 @@ class InspecService:
             del result['output']
             del result['stderr']
             print(result)
+            # result=json.loads(result)
+
+            # 直接截取前 30 个，自动处理不足 30 的情况
+            result['result']['profiles'][0]['controls'] = result['result']['profiles'][0]['controls'][:30]
+
             execution = Execution(
                 execution_id=str(uuid.uuid4()),
                 command_id=command.command_id,

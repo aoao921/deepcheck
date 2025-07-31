@@ -31,9 +31,9 @@
                             <span class="execution-count">0</span>
                             <span class="execution-icon"><i class="fas fa-tasks"></i></span>
                         </div>
-                        <div id="event-status" class="event-status pending">
-                            <span class="status-indicator"></span>
-                            <span class="status-text">待处理</span>
+                        <div id="event-status" class="event-status pending" style="display: none;">
+                            <span class="status-indicator" style="display: none;"></span>
+                            <span class="status-text" style="display: none;">待处理</span>
                         </div>
                         <button id="event-details-btn" class="cyber-btn small">
                             <span class="cyber-btn-text">详情</span>
@@ -54,7 +54,7 @@
             
             <!-- 输入区域 -->
             <div class="chat-input-container">
-                <div class="chat-input-wrapper">
+                <div class="chat-input-wrapper" style="display: none;">
                     <input type="text" id="user-input" class="chat-input" placeholder="输入指令...">
                     <button id="send-button" class="cyber-btn">
                         <span class="cyber-btn-text">发送</span>
@@ -173,17 +173,17 @@
             <div class="control-section">
                 <div class="mode-switch-container">
                     <div id="mode-switch" class="mode-switch auto-mode">
-                        <div class="switch-track">
-                            <div class="switch-handle">
-                                <div class="handle-icon auto">
-                                    <i class="bi bi-robot"></i>
-                                </div>
-                                <div class="handle-icon manual">
-                                    <i class="bi bi-person-fill"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="switch-label">AI自动驾驶</div>
+<!--                        <div class="switch-track">-->
+<!--                            <div class="switch-handle">-->
+<!--                                <div class="handle-icon auto">-->
+<!--                                    <i class="bi bi-robot"></i>-->
+<!--                                </div>-->
+<!--                                <div class="handle-icon manual">-->
+<!--                                    <i class="bi bi-person-fill"></i>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="switch-label">AI自动驾驶</div>-->
                     </div>
                 </div>
                 
@@ -192,7 +192,7 @@
                         <i class="bi bi-graph-up-arrow"></i>
                         <span>可视化</span>
                     </button>
-                    <button id="settings-btn" class="control-btn">
+                    <button id="settings-btn" class="control-btn" style="display: none;">
                         <i class="bi bi-gear-fill"></i>
                         <span>设置</span>
                     </button>

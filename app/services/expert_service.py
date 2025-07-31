@@ -814,10 +814,10 @@ def run_expert():
     t4.daemon = True
     threads.append(t4)
     
-    # 线程5：处理事件总结生成
-    t5 = threading.Thread(target=event_summary_worker, args=(app,))
-    t5.daemon = True
-    threads.append(t5)
+    # # 线程5：处理事件总结生成
+    # t5 = threading.Thread(target=event_summary_worker, args=(app,))
+    # t5.daemon = True
+    # threads.append(t5)
     
     # 启动所有线程
     for t in threads:

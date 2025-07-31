@@ -144,7 +144,7 @@ def health():
 #     return render_template('heimdallite.html')
 @app.route('/result')
 def result():
-    inspec_dir = r'./output/inspec'
+    inspec_dir = r'./output'
     json_files = [f for f in os.listdir(inspec_dir) if f.endswith('.json')]
     if not json_files:
         return render_template('heimdallite.html', auto_json=None, auto_json_filename=None)
