@@ -54,7 +54,7 @@ def call_llm(system_prompt, user_prompt, history=None, temperature=None, long_te
     # 发送请求
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {LLM_API_KEY}"
+        # "Authorization": f"Bearer {LLM_API_KEY}"
     }
 
     response = requests.post(

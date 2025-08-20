@@ -85,6 +85,7 @@ res_id: '{ 来自用户请求 }'
 ```
 以下是对命令指令的要求：
 - 至少输出一个命令
+- output_path请默认使用output赋值，不要杜撰一个
 - command_type包括：playbook或者manual（未来可能扩展）
 - 如果涉及到脚本，则明确脚本ID和参数信息
 - 如果有多个命令应该放在command中，而不是多个yaml内容

@@ -1043,7 +1043,8 @@ function addMessage(message) {
             }
             
             // 可折叠的JSON结果
-            if (data.result) {
+            if (data.result && data.result['result']) {
+                show_result=data.result['result']['profiles'][0]['controls'].slice(0, 5);
                 const resultId = `result-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
                 messageContent += `
                     <div class="collapsible-result">
@@ -1051,7 +1052,7 @@ function addMessage(message) {
                             <span class="collapse-icon">▶</span> 查看详细结果
                         </div>
                         <div id="${resultId}" class="collapsible-content collapsed">
-                            <pre>${JSON.stringify(data.result, null, 2)}</pre>
+                            <pre>${JSON.stringify(show_result, null, 2)}</pre>
                         </div>
                     </div>
                 `;

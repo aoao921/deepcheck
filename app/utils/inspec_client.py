@@ -86,6 +86,7 @@ class InspecClient:
         :param params: 脚本参数
         :return: 执行结果
         """
+
         profile = self.get_profile_info(profile_id)
         if not profile:
             logger.error(f"脚本不存在: {profile_id}")
@@ -344,27 +345,30 @@ if __name__ == '__main__':
     
     # 创建InspecClient实例
     client = InspecClient()
-    
-    # 列出所有可用的脚本
-    profiles = client.list_profiles()
-    logger.info(f"可用脚本列表: {json.dumps(profiles, ensure_ascii=False, indent=2)}")
-    
-    # 如果有可用脚本，尝试执行第一个
-    if profiles:
-        profile_id = profiles[2]['id']
-        logger.info(f"尝试执行脚本ID: {profile_id}")
-        
-        # 构建测试参数
-        params = {
-            'output_format': 'json',
-            'output_path': 'output/inspec/test.json',
-            # 'host': 'example.com',
-            # 'user': 'test_user',
-            # 'password': 'test_password'  # 添加密码参数
-        }
-        
-        # 执行脚本
-        result = client.execute_profile(profile_id, params)
-        # logger.info(f"执行结果: {json.dumps(result, ensure_ascii=False, indent=2)}")
-    else:
-        logger.warning("没有找到可用的脚本") 
+    print(client.profiles_config)
+    print(111)
+    print("111",client.get_profile_info('2'))
+
+    # # 列出所有可用的脚本
+    # profiles = client.list_profiles()
+    # logger.info(f"可用脚本列表: {json.dumps(profiles, ensure_ascii=False, indent=2)}")
+    #
+    # # 如果有可用脚本，尝试执行第一个
+    # if profiles:
+    #     profile_id = profiles[2]['id']
+    #     logger.info(f"尝试执行脚本ID: {profile_id}")
+    #
+    #     # 构建测试参数
+    #     params = {
+    #         'output_format': 'json',
+    #         'output_path': 'output/inspec/test.json',
+    #         # 'host': 'example.com',
+    #         # 'user': 'test_user',
+    #         # 'password': 'test_password'  # 添加密码参数
+    #     }
+    #
+    #     # 执行脚本
+    #     result = client.execute_profile(profile_id, params)
+    #     # logger.info(f"执行结果: {json.dumps(result, ensure_ascii=False, indent=2)}")
+    # else:
+    #     logger.warning("没有找到可用的脚本")

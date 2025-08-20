@@ -20,6 +20,7 @@ profiles:
         default: 'json'
         required: true
       - name: output_path
+        default: 'output'
         desc: 输出文件路径
         required: true
       - name: script_path
@@ -46,6 +47,7 @@ profiles:
         default: 'json'
         required: true
       - name: output_path
+        default: 'output'
         desc: 输出文件路径
         required: true
       - name: script_path
@@ -176,6 +178,7 @@ profiles:
         default: 'json'
         required: true
       - name: output_path
+        default: 'output'
         desc: 输出文件路径
         required: true
       - name: script_path

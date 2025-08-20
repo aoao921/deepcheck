@@ -7,7 +7,7 @@ InSpec 是由 Chef 公司开发的开源基础设施安全与合规性测试框�
 ## 基础执行流程
 inspec exec <PROFILE_PATH> \           # 指定测试套件
   -t ssh://user@host \                 # 指定目标（支持 local/docker/aws）
-  --reporter json:/path/report.json \  # 输出 JSON 报告
+  --reporter json \  # 输出 JSON 形式
 ## 典型工作流：
 1. 编写 Profile（包含 controls 测试用例）
 2. 使用 `inspec check` 验证语法

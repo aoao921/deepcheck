@@ -50,16 +50,19 @@ actions:
       action_name: 使用脚本【Linux安全基线检查】检测目标服务器的安全基线情况，ip地址为1.1.1.1，用户名admin。
       action_type: write 
       task_id:  '{ 来自用户请求 }'
+      
     - action_assignee: _operator
       action_name: 使用脚本【MySQL安全基线检查】检测目标服务器的安全基线情况，ip地址为1.1.1.1，用户名admin。
       action_type: write 
-      task_id:  '{ 来自用户请求 }'  
+      task_id:  '{ 来自用户请求 }'
+    
 req_id:  '{ 来自用户请求 }'
 res_id:  '{ 来自用户请求 }'
 ```
 
 以下是对动作指令的要求：
 - 至少输出一个动作
+- 请尽可能的简化action_name的内容，不要杜撰输出路径等信息
 - 要明确在哪个目标系统上以何种方式和参数/条件查询什么内容
 - 如果有多个动作应该放在actions中，而不是多个yaml内容
 - action_assignee只能是_operator
